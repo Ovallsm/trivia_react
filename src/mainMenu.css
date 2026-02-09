@@ -1,0 +1,35 @@
+body {
+  background-color: #0f172a;
+  font-family: Arial, sans-serif;
+}
+
+*{
+    margin: 0 auto;
+}
+
+#BtnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+button{
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  margin: 10px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+  width: 10rem;
+  height: 5rem;
+  
+}
+
+button:hover {
+  background-color: #2563eb;
+  transform: scale(1.05);
+}
