@@ -22,10 +22,10 @@ async function fetchAddPlayer(name, room) {
       code: room.code,
       username: name,
     }),
-  }).then((res) => res.json()).catch(c => console.log(c));
+  })
+    .then((res) => res.json())
+    .catch((c) => console.log(c));
 }
-
-
 
 const sustantiv = [
   "capital",
@@ -150,18 +150,28 @@ export async function createGame(name) {
 
   const ok = await fetchAddPlayer(name, room);
 
-  console.log(room)
-  console.log(ok)
+  console.log(room);
+  console.log(ok);
 
-  console.log(generateJoinURL(room))
+  console.log(generateJoinURL(room));
+  localStorage.setItem("username",name)
+
 }
 
+function generateJoinURL(room) {
+  var param = new URL("http://localhost:5173/joinroom");
+  param.searchParams.append("code", room.code);
+  param.searchParams.append("id", room.id);
 
-function generateJoinURL(room){
-  var param = new URL("http://localhost:5173/joinroom")
-  param.searchParams.append('code',room.code)
-  param.searchParams.append('id',room.id)
+  return param.toString();
+}
 
-  return param.toString()
-} 
+export async function joinGameWithURL(name) {
+  var url = new URL(window.location.href);
 
+  var roomid = url.searchParams.get("id");
+  var roomcode = url.searchParams.get("code");
+  await fetchAddPlayer(name, { id: roomid, code: roomcode });
+
+  localStorage.setItem("username",name)
+}

@@ -113,3 +113,9 @@ a:hover {
 .button:active {
   transform: scale(0.98);
 }
+
+
+.inputError {
+  border: 2px solid red;
+  transition: border 0.3s;
+}
