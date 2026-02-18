@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "../styles/mainMenu.css";
-import { createGame } from "./fetch.js";
+import { createGame } from "../scripts/fetchJoinRoom.js";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import TokenContext from "../context/tokenContext";
 
 export default function CreateGame() {
+  const { token, setToken } = useContext(TokenContext);
+
   const [username, setUsername] = useState("");
   const [error, setError] = useState(false); 
   const navigate = useNavigate();
@@ -12,7 +16,7 @@ export default function CreateGame() {
   const handleCreateGame = async () => {
     if (username !== "") {
       try {
-        await createGame(username);
+        setToken(await createGame(username));
         navigate("/room");
       } catch (error) {
         console.error(error);

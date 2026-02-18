@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
-import { joinGameWithURL } from "./fetch";
+import { useState, useEffect, useContext } from "react";
+import { joinGameWithURL } from "../scripts/fetchJoinRoom";
 import { useNavigate } from "react-router-dom";
+import TokenContext from "../context/tokenContext";
+
 
 export default function JoinGame() {
+  const { token, setToken } = useContext(TokenContext);
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState(false);
@@ -20,7 +23,7 @@ export default function JoinGame() {
   const JoinGameWithName = async () => {
     if (username != "") {
       try {
-        await joinGameWithURL(username);
+        setToken(await joinGameWithURL(username));
         navigate("/room");
       } catch (error) {
         navigate("/");

@@ -22,9 +22,7 @@ async function fetchAddPlayer(name, room) {
       code: room.code,
       username: name,
     }),
-  })
-    .then((res) => res.json())
-    .catch((c) => console.log(c));
+  }).then((res) => res.json());
 }
 
 const sustantiv = [
@@ -150,12 +148,14 @@ export async function createGame(name) {
 
   const ok = await fetchAddPlayer(name, room);
 
-  console.log(room);
   console.log(ok);
+  localStorage.setItem("joinURL", generateJoinURL(room));
+  localStorage.setItem("username", name);
+  localStorage.setItem("token", ok.token);
+  localStorage.setItem("id",ok.player.id)
+  localStorage.setItem("roomid",room.id)
 
-  console.log(generateJoinURL(room));
-  localStorage.setItem("username",name)
-
+  return ok.token;
 }
 
 function generateJoinURL(room) {
@@ -171,7 +171,12 @@ export async function joinGameWithURL(name) {
 
   var roomid = url.searchParams.get("id");
   var roomcode = url.searchParams.get("code");
-  await fetchAddPlayer(name, { id: roomid, code: roomcode });
+  localStorage.setItem("username", name);
 
-  localStorage.setItem("username",name)
+
+  const ok = await fetchAddPlayer(name, { id: roomid, code: roomcode });
+  localStorage.setItem("id",ok.player.id)
+  localStorage.setItem("roomid",roomid)
+  localStorage.setItem("token", ok.token);
+  return ok.token;
 }
