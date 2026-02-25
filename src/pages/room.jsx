@@ -6,42 +6,49 @@ import NavRoom from "../assets/NavRoom";
 import TokenContext from "../context/tokenContext";
 import PlayerBox from "../assets/playerbox";
 import FetchSSeServer from "../scripts/fetchRoom";
+import { getRoomPlayers } from "../scripts/fetchRoom"
 import "../styles/room.css";
 
 export default function Room() {
-  const [username, setUsername] = useState("");
   const [players, setPlayers] = useState([{}]);
-  var roomid = 0;
-  const { token, setToken } = useContext(TokenContext);
+  const { token, setToken, name, setName, playerId, setPlayerId, roomId, setRoomId } = useContext(TokenContext);
 
   const eventSource = useRef(null);
 
   useEffect(() => {
-    var name = localStorage.getItem("username");
-    var id = localStorage.getItem("id");
-    roomid = localStorage.getItem("roomid");
-    setUsername(name);
-    setToken(localStorage.getItem("token"));
-    const newPlayers = [{ name: name, id: id }];
-    setPlayers(newPlayers);
+    const fetchData = async () => {
+      setPlayers([{ name: name, id: playerId }]);
 
-    if (eventSource.current === null) {
-      eventSource.current =  FetchSSeServer(roomid, token);
+      var fetchPlayers = await getRoomPlayers(roomId, token);
 
+      setPlayers([{ name: name, id: playerId }, ...fetchPlayers])
+    };
+
+    fetchData();
+
+    
+    if (!eventSource.current) {
+      eventSource.current = FetchSSeServer(roomId, token);
+
+      /*
       eventSource.current.addEventListener("player-left", (event) => {
-        setPlayers(players.filter((player) => player.id != event.data));
+        setPlayers(prev =>
+          prev.filter(player => player.id !== event.data)
+        );
       });
 
       eventSource.current.addEventListener("player-joined", async (event) => {
         const player = await fetchPlayer(event.data);
-        setPlayers([...players, player]);
+        setPlayers(prev => [...prev, player]);
       });
+      */
     }
+    
   }, []);
 
   return (
     <>
-      <NavRoom roomCode={localStorage.getItem("joinURL")} username={username} />
+      <NavRoom roomCode={localStorage.getItem("joinURL")} username={name} />
       <PlayerBox players={players} />
     </>
   );
