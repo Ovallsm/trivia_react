@@ -5,12 +5,18 @@ import { useContext } from "react";
 import NavRoom from "../assets/NavRoom";
 import TokenContext from "../context/tokenContext";
 import FetchSSeServer from "../scripts/fetchRoom";
-import { getRoomPlayers, fetchNewPLayer } from "../scripts/fetchRoom";
+import {
+  getRoomPlayers,
+  fetchNewPLayer,
+  getRoomsTeams,
+} from "../scripts/fetchRoom";
 import "../styles/room.css";
 import TeamZone from "../assets/TeamZone";
+import GameOptions from "../assets/GameOptions";
+
 export default function Room() {
   const [players, setPlayers] = useState([]);
-  
+
   const [teams, setTeams] = useState([]);
   const [joinURL, setJoinURL] = useState("");
   const {
@@ -29,32 +35,40 @@ export default function Room() {
 
   const eventSource = useRef(null);
 
+  console.log(players)
   useEffect(() => {
+    getRoomsTeams(roomId, token).then((teams) => {
+      setTeams(teams);
+    });
     setJoinURL(generateJoinURL(roomId, code));
 
     const fetchData = async () => {
-      const newPlayers = [{ name: name, id: playerId, team: null }];
 
       const fetchPlayers = await getRoomPlayers(roomId, token);
 
-      const combined = [...newPlayers, ...fetchPlayers];
-      combined.pop();
-      setPlayers(combined);
+
+
+      setPlayers(fetchPlayers.map((player) => ({ name: player.name, id: player.id, team: player.team })));
 
     };
-
     fetchData();
 
     if (!eventSource.current) {
       eventSource.current = FetchSSeServer(roomId, token);
 
       eventSource.current.addEventListener("player-joined", async (event) => {
+        console.log(event.data);
         const player = await fetchNewPLayer(event.data, token, roomId);
-        setPlayers((prev) => [...prev, { name: player.name, id: player.id }]);
+        setPlayers((prev) => [...prev, { name: player.name, id: player.id, team: player.team }]);
       });
 
       eventSource.current.addEventListener("player-left", (event) => {
         setPlayers((prev) => prev.filter((player) => player.id !== event.data));
+      });
+
+      eventSource.current.addEventListener("team-created", async (event) => {
+        const updatedTeams = await getRoomsTeams(roomId, token);
+        setTeams(updatedTeams);
       });
     }
   }, []);
@@ -62,7 +76,13 @@ export default function Room() {
   return (
     <>
       <NavRoom roomCode={joinURL} username={name} />
-      <TeamZone players={players} teams={teams} setTeams={setTeams} isHost={isHost} />
+      <GameOptions />
+      <TeamZone
+        players={players}
+        teams={teams}
+        setTeams={setTeams}
+        setPlayers={setPlayers}
+      />
     </>
   );
 

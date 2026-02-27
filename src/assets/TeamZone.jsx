@@ -1,64 +1,64 @@
 import TeamBox from "./TeamBox";
 import { useState, useContext } from "react";
 import TokenContext from "../context/tokenContext";
-import { createTeam } from "../scripts/fetchRoom";
+import { createTeam, quitTeam } from "../scripts/fetchRoom";
 
-export default function TeamZone({ players, teams, setTeams }) {
-  const { token, roomId, isHost } = useContext(TokenContext);
+export default function TeamZone({ players, teams, setTeams, setPlayers }) {
+  const { token, roomId, isHost, playerId } = useContext(TokenContext);
 
   const addTeam = async () => {
     const team = await createTeam(token, roomId);
-    console.log("created team", team);
-
-
-    setTeams((prev) => [...prev, { id: team.id }]);
   };
 
-  if (!isHost) {
-    return (
-      <>
-        <h1>Spectate</h1>
-        <div className="player-box">
-          {players.map((player) =>
-            player.team == null ? (
-              <div key={player.id || Math.random()} className="player">
-                {player.name}
-              </div>
-            ) : null,
-          )}
-        </div>
-
-        <div className="team-zone">
-          {teams
-            .filter((t) => t && t.id != null)
-            .map((team, index) => (
-              <TeamBox key={team.id} team={team} players={players} index={index} />
-            ))}
-        </div>
-      </>
+  const quitTeamPlayer = async () => {
+  
+    await quitTeam(players.find(p => p.id === playerId)?.team, token, roomId, playerId);
+  
+    setPlayers((prev) =>
+      prev.map((player) =>
+        player.id === playerId ? { ...player, team: null } : player,
+      ),
     );
   }
 
   return (
-    <>
-      <h1>Spectate</h1>
-      <div className="player-box">
-        {players.map((player) =>
-          player.team == null ? (
-            <div key={player.id || Math.random()} className="player">
-              {player.name}
-            </div>
-          ) : null,
-        )}
-      </div>
-      <div className="team-zone">
-        {teams
-          .filter((t) => t && t.id != null)
-          .map((team, index) => (
-            <TeamBox key={team.id} team={team} players={players} index={index} />
-          ))}      </div>
+  <>
+    <h1>Spectate</h1>
 
-      <button onClick={addTeam}>Agregar Equipo</button>
-    </>
-  );
-}
+    <div className="player-box">
+      {players
+        .filter((player) => player.team == null)
+        .map((player) => (
+          <div key={player.id} className="player">
+            {player.name}
+          </div>
+        ))}
+
+      {players.find((player) => player.id === playerId)?.team != null && (
+        <button onClick={quitTeamPlayer}>
+          Spectate
+        </button>
+      )}
+    </div>
+
+    <div className="team-zone">
+      {teams
+        .filter((t) => t && t.id != null)
+        .map((team, index) => (
+          <TeamBox
+            key={team.id}
+            team={team}
+            players={players}
+            index={index}
+            setPlayers={setPlayers}
+          />
+        ))}
+    </div>
+
+    {isHost && (
+      <button onClick={addTeam}>
+        Agregar Equipo
+      </button>
+    )}
+  </>
+); }

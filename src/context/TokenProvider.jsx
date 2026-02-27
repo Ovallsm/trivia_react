@@ -7,7 +7,10 @@ function TokenProvider({ children }) {
   const [playerId, setPlayerId] = useState(() => localStorage.getItem("playerId") || null);
   const [roomId, setRoomId] = useState(() => localStorage.getItem("roomId") || null);
   const [code, setCode] = useState(() => localStorage.getItem("code") || null);
-  const [isHost, setIsHost] = useState(() => localStorage.getItem("isHost") || null);
+  const [isHost, setIsHost] = useState(() => {
+    const stored = localStorage.getItem("isHost");
+    return stored === "true" ? true : stored === "false" ? false : null;
+  });
 
   useEffect(() => {
     if (token) localStorage.setItem("token", token);
