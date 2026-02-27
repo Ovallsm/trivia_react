@@ -10,6 +10,11 @@ const TokenContext = createContext({
   setPlayerId: () => {},
   roomId: null,
   setRoomId: () => {},
+  code: null,
+  setCode: () => {},
+  isHost : null,
+  setHost: () => {},  
+
 });
 
 export default TokenContext;

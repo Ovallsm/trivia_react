@@ -7,22 +7,29 @@ import { useContext } from "react";
 import TokenContext from "../context/tokenContext";
 
 export default function CreateGame() {
-  const { token, setToken } = useContext(TokenContext);
+  const { token, setToken, setName, setPlayerId, setRoomId, setCode, setIsHost } = useContext(TokenContext);
 
   const [username, setUsername] = useState("");
   const [error, setError] = useState(false); 
   const navigate = useNavigate();
 
   const handleCreateGame = async () => {
+    
     if (username !== "") {
       try {
-        setToken(await createGame(username));
+        const gameData = await createGame(username);
+
+        setToken(gameData.token);
+        setName(gameData.name);
+        setPlayerId(gameData.playerId);
+        setRoomId(gameData.roomId);
+        setCode(gameData.code);
+        setIsHost(gameData.isHost);
         navigate("/room");
       } catch (error) {
         console.error(error);
       }
     } else {
-   
       setError(true);
       setTimeout(() => setError(false), 500);
     }

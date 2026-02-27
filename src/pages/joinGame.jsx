@@ -5,7 +5,7 @@ import TokenContext from "../context/tokenContext";
 
 
 export default function JoinGame() {
-  const { token, setToken } = useContext(TokenContext);
+  const { token, setToken, setName, setPlayerId, setRoomId, setCode, setIsHost } = useContext(TokenContext);
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState(false);
@@ -23,7 +23,13 @@ export default function JoinGame() {
   const JoinGameWithName = async () => {
     if (username != "") {
       try {
-        setToken(await joinGameWithURL(username));
+        const gameData = await joinGameWithURL(username);
+        setToken(gameData.token);
+        setName(gameData.name);
+        setPlayerId(gameData.playerId);
+        setRoomId(gameData.roomId);
+        setCode(gameData.code);
+        setIsHost(gameData.isHost);
         navigate("/room");
       } catch (error) {
         navigate("/");

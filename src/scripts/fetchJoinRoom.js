@@ -3,8 +3,6 @@ async function fetchCreateGame() {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      
-      
     },
     body: JSON.stringify({ code: generateCode() }),
   }).then((res) => res.json());
@@ -150,22 +148,22 @@ export async function createGame(name) {
 
   const ok = await fetchAddPlayer(name, room);
 
-  console.log(ok);
-  localStorage.setItem("joinURL", generateJoinURL(room));
-  localStorage.setItem("username", name);
+  localStorage.clear();
+
+  localStorage.setItem("name", name);
   localStorage.setItem("token", ok.token);
   localStorage.setItem("playerId", ok.player.id);
   localStorage.setItem("roomId", room.id);
-
-  return ok.token;
-}
-
-function generateJoinURL(room) {
-  var param = new URL("http://localhost:5173/joinroom");
-  param.searchParams.append("code", room.code);
-  param.searchParams.append("id", room.id);
-
-  return param.toString();
+  localStorage.setItem("code", room.code);
+  localStorage.setItem("isHost", true);
+  return {
+    token: ok.token,
+    name: name,
+    playerId: ok.player.id,
+    roomId: room.id,
+    code: room.code,
+    isHost: true
+  };
 }
 
 export async function joinGameWithURL(name) {
@@ -173,12 +171,22 @@ export async function joinGameWithURL(name) {
 
   var roomid = url.searchParams.get("id");
   var roomcode = url.searchParams.get("code");
-  localStorage.setItem("username", name);
-
 
   const ok = await fetchAddPlayer(name, { id: roomid, code: roomcode });
+
+  localStorage.clear();
+  localStorage.setItem("name", name);
+  localStorage.setItem("code", roomcode);
   localStorage.setItem("playerId", ok.player.id);
   localStorage.setItem("roomId", roomid);
   localStorage.setItem("token", ok.token);
-  return ok.token;
+  localStorage.setItem("isHost", false);
+  return {
+    token: ok.token,
+    name: name,
+    playerId: ok.player.id,
+    roomId: roomid,
+    code: roomcode,
+    isHost: false
+  };
 }
