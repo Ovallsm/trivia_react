@@ -6,11 +6,13 @@ import TokenProvider from "./context/TokenProvider.jsx";
 import Room from "./pages/room";
 import CreateGame from "./pages/createGame";
 import JoinGame from "./pages/joingame";
+import Game from  "./pages/Game.jsx"
 
 const router = createBrowserRouter([
   { path: "/", element: <CreateGame /> },
   { path: "/joinroom", element: <JoinGame /> },
   { path: "/room", element: <Room /> },
+  {path: "/game", element: <h1>Game Started</h1>}
 ]);
 
 createRoot(document.getElementById("root")).render(

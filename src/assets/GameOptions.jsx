@@ -1,10 +1,15 @@
 import { useState } from "react";
-
+import { useContext } from "react";
+import TokenContext from "../context/tokenContext";
+import { useNavigate } from "react-router-dom";
+import { startGame } from "../scripts/fetchGame";
 export default function GameOptions() {
+  var navigate = useNavigate();
+  const { token, roomId } = useContext(TokenContext);
   const [gameOptions, setGameOptions] = useState({
-    rounds: "",
-    timePerRound: "",
-    questionsPerRound: "",
+    rounds: 2,
+    timePerRound: 60,
+    questionsPerRound: 2,
   });
 
   const handleChange = (e) => {
@@ -16,9 +21,11 @@ export default function GameOptions() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(gameOptions); 
+    await startGame(roomId, token, gameOptions);
+
+    navigate("/game");
   };
 
   return (

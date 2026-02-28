@@ -17,6 +17,7 @@ import GameOptions from "../assets/GameOptions";
 export default function Room() {
   const [players, setPlayers] = useState([]);
 
+  const navigate = useNavigate();
   const [teams, setTeams] = useState([]);
   const [joinURL, setJoinURL] = useState("");
   const {
@@ -35,7 +36,6 @@ export default function Room() {
 
   const eventSource = useRef(null);
 
-  console.log(players)
   useEffect(() => {
     getRoomsTeams(roomId, token).then((teams) => {
       setTeams(teams);
@@ -63,13 +63,39 @@ export default function Room() {
       });
 
       eventSource.current.addEventListener("player-left", (event) => {
-        setPlayers((prev) => prev.filter((player) => player.id !== event.data));
+        console.log("player left", event.data);
+        setPlayers((prev) => prev.filter((player) => player.id != event.data));
+
+        if (playerId == event.data) {
+          setToken(null);
+          setName(null);
+          setPlayerId(null);
+          setRoomId(null);
+          setCode(null);
+          navigate("/");
+
+        }
       });
 
       eventSource.current.addEventListener("team-created", async (event) => {
         const updatedTeams = await getRoomsTeams(roomId, token);
         setTeams(updatedTeams);
       });
+      eventSource.current.addEventListener("team-deleted", async (event) => {
+        console.log("team deleted", event.data);
+        const updatedTeams = await getRoomsTeams(roomId, token);
+        setTeams(updatedTeams);
+      });
+      eventSource.current.addEventListener("player-assigned-to-team", async (event) => {
+        const player = await fetchNewPLayer(event.data, token, roomId);
+        console.log(player)
+        setPlayers((prev) => prev.map((p) => (p.id == player.id ? player : p)));
+      })
+      eventSource.current.addEventListener("player-removed-from-team", async (event) => {
+        const player = await fetchNewPLayer(event.data, token, roomId);
+        setPlayers((prev) => prev.map((p) => (p.id == player.id ? player : p)));
+      });
+
     }
   }, []);
 
