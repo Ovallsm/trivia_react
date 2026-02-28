@@ -9,7 +9,6 @@ export default function Game() {
   const [rounds, setRounds] = useState([]);
   const [currentRound, setCurrentRound] = useState(null);
   const [timeLeft, setTimeLeft] = useState(0);
-  const [roundIndex, setRoundIndex] = useState(0);
 
   useEffect(() => {
     if (!gameId) return;
