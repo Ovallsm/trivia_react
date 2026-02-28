@@ -11,6 +11,7 @@ function TokenProvider({ children }) {
     const stored = localStorage.getItem("isHost");
     return stored === "true" ? true : stored === "false" ? false : null;
   });
+  const [gameId, setGameId] = useState(() => localStorage.getItem("gameId") || null);
 
   useEffect(() => {
     if (token) localStorage.setItem("token", token);
@@ -38,10 +39,13 @@ function TokenProvider({ children }) {
   }, [isHost]);
 
 
+  useEffect(() => {
+    if (gameId) localStorage.setItem("gameId", gameId);
+  }, [gameId]);
 
   return (
     <TokenContext.Provider
-      value={{ token, setToken, name, setName, playerId, setPlayerId, roomId, setRoomId, code, setCode, isHost, setIsHost, }}
+      value={{ token, setToken, name, setName, playerId, setPlayerId, roomId, setRoomId, code, setCode, isHost, setIsHost, gameId, setGameId }}
     >
       {children}
     </TokenContext.Provider>

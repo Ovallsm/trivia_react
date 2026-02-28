@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { startGame } from "../scripts/fetchGame";
 export default function GameOptions() {
   var navigate = useNavigate();
-  const { token, roomId } = useContext(TokenContext);
+  const { token, roomId, setGameId } = useContext(TokenContext);
   const [gameOptions, setGameOptions] = useState({
     rounds: 2,
     timePerRound: 60,
@@ -23,7 +23,9 @@ export default function GameOptions() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await startGame(roomId, token, gameOptions);
+    var result = await startGame(roomId, token, gameOptions);
+    console.log(result)
+    setGameId();
 
     navigate("/game");
   };

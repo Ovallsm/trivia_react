@@ -12,7 +12,7 @@ const router = createBrowserRouter([
   { path: "/", element: <CreateGame /> },
   { path: "/joinroom", element: <JoinGame /> },
   { path: "/room", element: <Room /> },
-  {path: "/game", element: <h1>Game Started</h1>}
+  {path: "/game", element: <Game />}
 ]);
 
 createRoot(document.getElementById("root")).render(

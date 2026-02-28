@@ -14,6 +14,8 @@ const TokenContext = createContext({
   setCode: () => {},
   isHost : null,
   setHost: () => {},  
+  gameId: null,
+  setGameId: () => {},
 
 });
 

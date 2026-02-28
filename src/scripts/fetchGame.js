@@ -1,5 +1,5 @@
 export async function startGame(roomId, token, gameOptions) {
-  var param = new URL("http://localhost:8083/rooms/" + roomId + "/teams");
+  var param = new URL("http://localhost:8083/games");
   param.searchParams.append("token", token);
     const response = await fetch(param.toString(), {
     method: "POST",
@@ -13,4 +13,14 @@ export async function startGame(roomId, token, gameOptions) {
         roomId: roomId,
     }),
     })
+}
+
+
+export async function fetchGame(token, gameID) {
+    var param = new URL("http://localhost:8083/games/" + gameID);
+    param.searchParams.append("token", token);
+    const response = await fetch(param.toString()).then((res) => res.json());
+    console.log(response)
+    return response;
+    
 }

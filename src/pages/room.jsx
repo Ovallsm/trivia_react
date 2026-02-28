@@ -32,6 +32,9 @@ export default function Room() {
     code,
     setCode,
     isHost,
+    setIsHost,
+      gameId,
+      setGameId
   } = useContext(TokenContext);
 
   const eventSource = useRef(null);
@@ -72,6 +75,7 @@ export default function Room() {
           setPlayerId(null);
           setRoomId(null);
           setCode(null);
+          setGameId(null)
           navigate("/");
 
         }
@@ -94,6 +98,10 @@ export default function Room() {
       eventSource.current.addEventListener("player-removed-from-team", async (event) => {
         const player = await fetchNewPLayer(event.data, token, roomId);
         setPlayers((prev) => prev.map((p) => (p.id == player.id ? player : p)));
+      });
+      eventSource.current.addEventListener("game-created", async (event) => {
+        setGameId(event.data);
+        navigate("/game");
       });
 
     }
