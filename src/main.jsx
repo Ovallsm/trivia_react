@@ -7,12 +7,14 @@ import Room from "./pages/room";
 import CreateGame from "./pages/createGame";
 import JoinGame from "./pages/joingame";
 import Game from  "./pages/Game.jsx"
+import Results from "./pages/Results.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <CreateGame /> },
   { path: "/joinroom", element: <JoinGame /> },
   { path: "/room", element: <Room /> },
-  {path: "/game", element: <Game />}
+  {path: "/game", element: <Game />},
+  {path: "/results", element: <Results />}
 ]);
 
 createRoot(document.getElementById("root")).render(

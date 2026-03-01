@@ -11,7 +11,7 @@ export default function GameOptions() {
     timePerRound: 60,
     questionsPerRound: 2,
   });
-
+  const [error, setError] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -23,11 +23,21 @@ export default function GameOptions() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    var result = await startGame(roomId, token, gameOptions);
-    console.log(result)
-    setGameId();
+    setError(null);
 
-    navigate("/game");
+    try {
+      const result = await startGame(roomId, token, gameOptions);
+
+      if (!result || !result.id) {
+        throw new Error("Invalid response from server");
+      }
+
+      setGameId(result.id);
+      navigate("/game");
+    } catch (err) {
+      console.error(err);
+      setError("Failed to start game. Please try again.");
+    }
   };
 
   return (
@@ -64,7 +74,7 @@ export default function GameOptions() {
             onChange={handleChange}
           />
         </div>
-
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <button type="submit">Start!</button>
       </form>
     </div>

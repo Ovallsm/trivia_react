@@ -40,6 +40,11 @@ export default function Room() {
   const eventSource = useRef(null);
 
   useEffect(() => {
+
+    if (token == null) {
+      navigate("/");
+      return;
+    }
     getRoomsTeams(roomId, token).then((teams) => {
       setTeams(teams);
     });
