@@ -1,74 +1,37 @@
-import { useContext, useEffect, useState } from "react";
-import TokenContext from "../context/tokenContext";
-import {
-  fetchGame,
-  fetchRounds,
-  getQuestionsOfRound,
-  getQuestionsAnswers,
-} from "../scripts/fetchGame";
-import { getRoomPlayers, getRoomsTeams } from "../scripts/fetchRoom";
 import "../styles/Results.css";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
-export default function Results() {
-  const { token, gameId, roomId } = useContext(TokenContext);
-  const navigator = useNavigate();
-  const [teams, setTeams] = useState([]);
+export default function LastGame() {
+  const [teams, setTeams] = useState(null);
   const [players, setPlayers] = useState([]);
-  const [questionsAnswered, setQuestionsAnswered] = useState([]);
   const [rounds, setRounds] = useState([]);
   const [questionsPerRound, setQuestionsPerRound] = useState([]);
+  const [questionsAnswered, setQuestionsAnswered] = useState([]);
 
   useEffect(() => {
-    if (token == null) {
-      navigator("/");
-      return;
+    const savedData = localStorage.getItem("lastGameResults");
+
+    console.log(savedData);
+    if (savedData) {
+      const parsed = JSON.parse(savedData);
+
+      setTeams(parsed.teams);
+      setPlayers(parsed.players);
+      setRounds(parsed.rounds);
+      setQuestionsPerRound(parsed.questionsPerRound);
+      setQuestionsAnswered(parsed.questionsAnswered);
     }
-    const loadData = async () => {
-      try {
-        const teamsData = await getRoomsTeams(roomId, token);
-        setTeams(teamsData);
+  }, []);
 
-        const playersData = await getRoomPlayers(roomId, token);
-        setPlayers(playersData);
-
-        const game = await fetchGame(token, gameId);
-
-        if (game) {
-          const roundsData = await fetchRounds(token, gameId);
-          setRounds(roundsData);
-
-          const allQuestionsPromises = roundsData.map((round) =>
-            getQuestionsOfRound(round, token, gameId),
-          );
-
-          const questions = await Promise.all(allQuestionsPromises);
-          setQuestionsPerRound(questions);
-
-          const allAnswersPromises = questions.map(
-            (roundQuestions, roundIndex) =>
-              Promise.all(
-                roundQuestions.map((question) =>
-                  getQuestionsAnswers(
-                    question.id,
-                    roundsData[roundIndex].id,
-                    gameId,
-                    token,
-                  ),
-                ),
-              ),
-          );
-
-          const allAnswers = await Promise.all(allAnswersPromises);
-          setQuestionsAnswered(allAnswers);
-        }
-      } catch (error) {
-        console.error("Error loading data:", error);
-      }
-    };
-
-    loadData();
-  }, [roomId, token, gameId]);
+  if (!teams) {
+    return (
+      <div>
+        No hay informacion de la partida
+        <Link to="/"> Crear una partida</Link>
+      </div>
+    );
+  }
 
   const isCorrectAnswer = (question, answer) => {
     if (!answer) return false;
@@ -105,22 +68,6 @@ export default function Results() {
   const goToCreateRoom = () => {
     navigator("/");
   };
-
-  useEffect(() => {
-    if (teams.length > 0) {
-      localStorage.setItem(
-        "lastGameResults",
-        JSON.stringify({
-          teams,
-          players,
-          rounds,
-          questionsPerRound,
-          questionsAnswered,
-        }),
-      );
-    }
-  }, [teams, players, rounds, questionsPerRound, questionsAnswered]);
-
   return (
     <div className="results-wrapper">
       <div className="results-grid">
