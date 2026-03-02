@@ -7,14 +7,21 @@ import { useContext } from "react";
 import TokenContext from "../context/tokenContext";
 
 export default function CreateGame() {
-  const { token, setToken, setName, setPlayerId, setRoomId, setCode, setIsHost } = useContext(TokenContext);
+  const {
+    token,
+    setToken,
+    setName,
+    setPlayerId,
+    setRoomId,
+    setCode,
+    setIsHost,
+  } = useContext(TokenContext);
 
   const [username, setUsername] = useState("");
-  const [error, setError] = useState(false); 
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const handleCreateGame = async () => {
-    
     if (username !== "") {
       try {
         const gameData = await createGame(username);
@@ -37,10 +44,11 @@ export default function CreateGame() {
 
   return (
     <div id="joinGameContainer">
+      <Link to={"/history"}> Last game history</Link>
       <input
         type="text"
         placeholder="username"
-        className={error ? "inputError" : ""} 
+        className={error ? "inputError" : ""}
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         required

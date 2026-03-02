@@ -106,6 +106,18 @@ export default function Results() {
     localStorage.clear();
     navigator("/");
   };
+
+  const resultsData = {
+    teams: teamsData,
+    players: playersData,
+    rounds: roundsData,
+    questionsPerRound: questions,
+    questionsAnswered: allAnswers,
+    gameId,
+    roomId,
+  };
+
+  localStorage.setItem("lastGameResults", JSON.stringify(resultsData));
   return (
     <div className="results-wrapper">
       <div className="results-grid">
@@ -178,7 +190,7 @@ export default function Results() {
 
       {winner && (
         <div className="winner-banner">
-           Ganador: Team {teams.findIndex((t) => t.id === winner.id) + 1}
+          Ganador: Team {teams.findIndex((t) => t.id === winner.id) + 1}
         </div>
       )}
 

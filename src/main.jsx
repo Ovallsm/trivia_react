@@ -14,7 +14,8 @@ const router = createBrowserRouter([
   { path: "/joinroom", element: <JoinGame /> },
   { path: "/room", element: <Room /> },
   {path: "/game", element: <Game />},
-  {path: "/results", element: <Results />}
+  {path: "/results", element: <Results />},
+  {path: "history", element: <>COsas</>}
 ]);
 
 createRoot(document.getElementById("root")).render(
