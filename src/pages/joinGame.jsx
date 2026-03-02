@@ -3,9 +3,16 @@ import { joinGameWithURL } from "../scripts/fetchJoinRoom";
 import { useNavigate } from "react-router-dom";
 import TokenContext from "../context/tokenContext";
 
-
 export default function JoinGame() {
-  const { token, setToken, setName, setPlayerId, setRoomId, setCode, setIsHost } = useContext(TokenContext);
+  const {
+    token,
+    setToken,
+    setName,
+    setPlayerId,
+    setRoomId,
+    setCode,
+    setIsHost,
+  } = useContext(TokenContext);
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState(false);
@@ -42,18 +49,20 @@ export default function JoinGame() {
   };
   return (
     <>
-      <input
-        type="text"
-        placeholder="username"
-        value={username}
-        className={error ? "inputError" : ""}
-        onChange={(e) => setUsername(e.target.value)}
-        required
-      />
+      <div id="joinGameContainer">
+        <input
+          type="text"
+          placeholder="username"
+          value={username}
+          className={error ? "inputError" : ""}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
 
-      <button onClick={JoinGameWithName} className="buttonStyle">
-        Join Game
-      </button>
+        <button onClick={JoinGameWithName} className="buttonStyle">
+          Join Game
+        </button>
+      </div>
     </>
   );
 }

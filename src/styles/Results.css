@@ -1,3 +1,133 @@
-.results-container{
-    color: black !important;
+.results-wrapper {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 25px;
+}
+
+.results-container {
+  background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+  border: 1px solid #333;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.results-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+}
+
+.results-container h2 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #90caf9;
+  letter-spacing: 0.5px;
+}
+
+.results-container h3 {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #4caf50;
+}
+
+.results-container h4 {
+  margin-bottom: 8px;
+  font-size: 15px;
+  color: #cfcfcf;
+}
+
+.results-container ul {
+  padding-left: 18px;
+  margin-top: 5px;
+}
+
+.results-container li {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.round-block {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #111;
+  border: 1px solid #333;
+}
+
+.question-block {
+  margin-bottom: 12px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #1a1a1a;
+  border: 1px solid #2c2c2c;
+}
+
+.question-block strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.answer-correct {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.answer-wrong {
+  color: #f44336;
+  font-weight: 500;
+}
+
+.winner-banner {
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.6);
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.results-btn {
+  margin: 40px auto 0 auto;
+  display: block;
+  background: #1565c0;
+  color: white;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.results-btn:hover {
+  background: #0d47a1;
+  transform: scale(1.03);
+}
+
+@media (max-width: 768px) {
+  .results-wrapper {
+    padding: 10px;
+  }
+
+  .results-container {
+    padding: 18px;
+  }
+
+  .winner-banner {
+    font-size: 20px;
+  }
 }

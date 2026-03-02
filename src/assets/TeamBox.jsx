@@ -50,29 +50,55 @@ export default function TeamBox({
   const currentPlayer = players.find((p) => p.id === playerId);
   const playersInTeam = players.filter((p) => p.team === team.id);
 
-  return (
-    <div className="team-box">
-      <h3>Team {index + 1}</h3>
+ return (
+  <div className="team-box">
+    <div className="team-header">
+      <h3 className="team-title">Equipo {index + 1}</h3>
+      <span className="team-count">
+        {playersInTeam.length} jugador{playersInTeam.length !== 1 && "es"}
+      </span>
+    </div>
+
+    <div className="team-players">
+      {playersInTeam.length === 0 && (
+        <div className="empty-team">Sin jugadores</div>
+      )}
 
       {playersInTeam.map((player) => (
-        <div key={player.id} className="player">
-          {player.name}
+        <div key={player.id} className="player-card">
+          <span className="player-name">{player.name}</span>
 
           {isHost && player.id != playerId && (
-            <button onClick={() => EliminatePlayer(player.id)}>
-              X
+            <button
+              className="remove-player-btn"
+              onClick={() => EliminatePlayer(player.id)}
+            >
+              ✕
             </button>
           )}
         </div>
       ))}
+    </div>
 
-      {currentPlayer?.team !== team.id && (
-        <button onClick={() => JoinTeam(team.id)}>Join Team!</button>
+    <div className="team-actions">
+      {currentPlayer?.team != team.id && (
+        <button
+          className="join-btn"
+          onClick={() => JoinTeam(team.id)}
+        >
+          Unirse al equipo
+        </button>
       )}
 
       {isHost && (
-        <button onClick={() => EliminateTeam(team.id)}>Eliminar Equipo</button>
+        <button
+          className="delete-team-btn"
+          onClick={() => EliminateTeam(team.id)}
+        >
+          Eliminar equipo
+        </button>
       )}
     </div>
-  );
+  </div>
+);
 }

@@ -1,5 +1,11 @@
-*{
-    color: rgb(255, 255, 255);
+body {
+  background-color: #121212;
+  color: #f5f5f5;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
 }
 
 .container {
@@ -23,12 +29,387 @@
   cursor: grab;
 }
 
-button{
-  margin-top: 10px;
-  padding: 8px 12px;
-  background: #007bff;
-  color: white;
+.join-btn {
+  background: #2e7d32;
+  color: #ffffff;
+}
+
+.join-btn:hover {
+  background: #1b5e20;
+}
+
+.delete-team-btn,
+.remove-player-btn {
+  background: #c62828;
+  color: #ffffff;
+}
+
+.delete-team-btn:hover,
+.remove-player-btn:hover {
+  background: #8e0000;
+}
+
+.add-team-btn {
+  background: #1565c0;
+  color: #ffffff;
+}
+
+.add-team-btn:hover {
+  background: #0d47a1;
+}
+
+.spectate-btn {
+  background: #424242;
+  color: #ffffff;
+}
+
+.spectate-btn:hover {
+  background: #2e2e2e;
+}
+
+.team-box {
+  width: 260px;
+  min-height: 320px;
+  padding: 15px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+  border: 1px solid #444;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.team-title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.team-count {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.team-players {
+  flex: 1;
+}
+
+.player-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background: #111;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
+
+
+button {
+  margin-top: 12px;
+  padding: 12px 16px;          
+  min-height: 44px;           
+  font-size: 15px;
+  font-weight: 600;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.join-btn,
+.delete-team-btn,
+.spectate-btn {
+  width: 100%;
+}
+
+.player-card:hover {
+  background: #1a1a1a;
+  transform: scale(1.02);
+}
+
+.remove-player-btn {
+  background: #ff4d4d;
+  padding: 4px 8px;
+}
+
+.join-btn {
+  width: 100%;
+  background: #28a745;
+}
+
+.delete-team-btn {
+  width: 100%;
+  background: #dc3545;
+}
+
+.team-actions {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.empty-team {
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.room-layout {
+  display: flex;
+  gap: 40px;
+  padding: 30px;
+}
+
+.spectator-section {
+  width: 250px;
+}
+
+.teams-section {
+  flex: 1;
+  border: 1px solid #333;
+  border-radius: 15px;
+  background-color: #1e1e1e;
+  padding: 20px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.section-header h2 {
+  margin: 0;
+}
+
+.section-count {
+  background: #333;
+  color: #f5f5f5;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.spectator-box {
+  background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #444;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.player-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2a2a2a;
+  color: #f5f5f5;
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
+
+.player-card:hover {
+  background: #333333;
+  transform: scale(1.02);
+}
+
+.empty-message {
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.add-team-btn {
+  background: #28a745;
+  padding: 8px 14px;
+  border-radius: 6px;
+}
+
+.spectate-btn {
+  margin-top: auto;
+  background: #6c757d;
+}
+
+.remove-player-btn {
+  background: #dc3545;
+  padding: 4px 8px;
+}
+
+.game-options-wrapper {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.game-options-card {
+  width: 100%;
+  max-width: 420px;
+  background: #1E1E1E;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.game-options-title {
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 22px;
+}
+
+.game-options-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #CFCFCF;
+}
+
+.form-group input {
+  padding: 12px;
+  min-height: 44px; 
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #2A2A2A;
+  color: #F5F5F5;
+  font-size: 15px;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border: 1px solid #1565C0;
+  box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.3);
+}
+
+.form-error {
+  color: #FF6B6B; 
+  font-size: 14px;
+  text-align: center;
+}
+
+.start-game-btn {
+  margin-top: 10px;
+  width: 100%;
+  background: #2E7D32;
+  color: white;
+  font-size: 16px;
+  min-height: 48px;
+}
+
+.start-game-btn:hover {
+  background: #1B5E20;
+}
+
+@media (max-width: 768px) {
+  .room-layout {
+    flex-direction: column;
+    gap: 20px;
+    padding: 15px;
+  }
+
+  .spectator-section {
+    width: 100%;
+  }
+
+  .teams-section {
+    width: 100%;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-box {
+    width: 100%;
+  }
+}
+
+
+@media (min-width: 1024px) {
+
+  .game-options-wrapper {
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .game-options-card {
+    max-width: 450px;
+  }
+
+  .game-options-wrapper::before {
+    content: "Welcome to the Room, Configure your match settings before starting the game.";
+    max-width: 400px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #F5F5F5;
+    line-height: 1.4;
+  }
+}
+
+
+.nav-room {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background-color: #1E1E1E;
+  border-bottom: 1px solid #333;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.username {
+  font-size: 14px;
+  color: #CFCFCF;
+}
+
+.copy-code-btn {
+  background: #1565C0;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  min-height: 40px;
+}
+
+.copy-code-btn:hover {
+  background: #0D47A1;
 }

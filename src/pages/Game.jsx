@@ -61,7 +61,7 @@ export default function Game() {
         const remaining = Math.max(0, endTime - now);
         setTimeLeft(Math.floor(remaining / 1000));
       } else {
-        navigate("/results")
+        navigate("/results");
         setCurrentRound(null);
         setTimeLeft(0);
       }
@@ -97,19 +97,26 @@ export default function Game() {
 
   return (
     <>
-      <h2>Game ID: {gameData.id}</h2>
-
       {currentRound ? (
         <>
-          <h3>
-            Round {currentRoundNumber} of {rounds.length}
-          </h3>
-
-          <h3>Time Left: {timeLeft}s</h3>
-
+          <div className="game-header">
+            {currentRound && (
+              <div className="round-info">
+                <h3>
+                  Round {currentRoundNumber} of {rounds.length}
+                </h3>
+                <h3 className={`timer ${timeLeft <= 10 ? "warning" : ""}`}>
+                  Time Left: {timeLeft}s
+                </h3>
+              </div>
+            )}
+          </div>
 
           {currentQuestion ? (
-            <QuestionZone questions={currentQuestion} roundID={currentRound.id} />
+            <QuestionZone
+              questions={currentQuestion}
+              roundID={currentRound.id}
+            />
           ) : (
             <h3>Loading questions...</h3>
           )}

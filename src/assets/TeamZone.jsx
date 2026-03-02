@@ -32,28 +32,55 @@ export default function TeamZone({ players, teams, setTeams, setPlayers }) {
   };
 
   return (
-    <>
-      <h1>Spectate</h1>
+  <div className="room-layout">
+    {/* LEFT SIDE - SPECTATORS */}
+    <div className="spectator-section">
+      <div className="section-header">
+        <h2>Espectadores</h2>
+        <span className="section-count">
+          {players.filter((p) => p.team == null).length}
+        </span>
+      </div>
 
-      <div className="player-box">
+      <div className="spectator-box">
+        {players.filter((player) => player.team == null).length === 0 && (
+          <div className="empty-message">No hay espectadores</div>
+        )}
+
         {players
           .filter((player) => player.team == null)
           .map((player) => (
-            <div key={player.id} className="player">
-              {player.name}
+            <div key={player.id} className="player-card">
+              <span>{player.name}</span>
 
               {isHost && player.id != playerId && (
-                <button onClick={() => EliminateSpectatorPlayer(player.id)}>
-                  X
+                <button
+                  className="remove-player-btn"
+                  onClick={() => EliminateSpectatorPlayer(player.id)}
+                >
+                  ✕
                 </button>
               )}
             </div>
           ))}
 
-        <button onClick={quitTeamPlayer}>Spectate</button>
+        <button className="spectate-btn" onClick={quitTeamPlayer}>
+          Ir a espectador
+        </button>
+      </div>
+    </div>
+
+    <div className="teams-section">
+      <div className="section-header">
+        <h2>Equipos</h2>
+        {isHost && (
+          <button className="add-team-btn" onClick={addTeam}>
+            + Agregar Equipo
+          </button>
+        )}
       </div>
 
-      <div className="team-zone">
+      <div className="team-grid">
         {teams
           .filter((t) => t && t.id != null)
           .map((team, index) => (
@@ -67,8 +94,7 @@ export default function TeamZone({ players, teams, setTeams, setPlayers }) {
             />
           ))}
       </div>
-
-      {isHost && <button onClick={addTeam}>Agregar Equipo</button>}
-    </>
-  );
+    </div>
+  </div>
+);
 }

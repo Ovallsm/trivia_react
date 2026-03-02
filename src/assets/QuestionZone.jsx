@@ -1,32 +1,29 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import TokenContext from "../context/tokenContext";
 import { sendAnswerFetch } from "../scripts/fetchGame";
+import "../styles/game.css";
 
 export default function QuestionZone({ questions, roundID }) {
-
   const { token, gameId } = useContext(TokenContext);
   const [answers, setAnswers] = useState({});
 
   const handleInputChange = (questionId, value) => {
-    setAnswers(prev => ({
+    setAnswers((prev) => ({
       ...prev,
-      [questionId]: value
+      [questionId]: value,
     }));
   };
 
   const sendAnswer = async (answer, id) => {
     try {
       await sendAnswerFetch(answer, id, roundID, gameId, token);
-      
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   return (
     <div className="question-zone">
       {questions.map((q) => (
         <div key={q.id} className="question-card">
-
           <h3>{q.question}</h3>
 
           {q.mediaUrl && (
@@ -37,14 +34,22 @@ export default function QuestionZone({ questions, roundID }) {
 
           {q.type === "multiple_choice" && (
             <div className="multiple-options">
-              {q.options.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => sendAnswer(option, q.id)}
-                >
-                  {option}
-                </button>
-              ))}
+              {q.options.map((option, index) => {
+                const isSelected = answers[q.id] === option;
+
+                return (
+                  <button
+                    key={index}
+                    className={isSelected ? "selected-answer" : ""}
+                    onClick={() => {
+                      handleInputChange(q.id, option);
+                      sendAnswer(option, q.id);
+                    }}
+                  >
+                    {option}
+                  </button>
+                );
+              })}
             </div>
           )}
 
@@ -54,14 +59,11 @@ export default function QuestionZone({ questions, roundID }) {
                 type="text"
                 placeholder="Escribe tu respuesta..."
                 value={answers[q.id] || ""}
-                onChange={(e) =>
-                  handleInputChange(q.id, e.target.value)
-                }
+                onChange={(e) => handleInputChange(q.id, e.target.value)}
               />
               <button
-                onClick={() =>
-                  sendAnswer(answers[q.id], q.id)
-                }
+                className={answers[q.id] ? "submitted-answer" : ""}
+                onClick={() => sendAnswer(answers[q.id], q.id)}
               >
                 SEND!
               </button>
@@ -74,20 +76,13 @@ export default function QuestionZone({ questions, roundID }) {
                 type="text"
                 placeholder="¡Responde rápido!"
                 value={answers[q.id] || ""}
-                onChange={(e) =>
-                  handleInputChange(q.id, e.target.value)
-                }
+                onChange={(e) => handleInputChange(q.id, e.target.value)}
               />
-              <button
-                onClick={() =>
-                  sendAnswer(answers[q.id], q.id)
-                }
-              >
+              <button onClick={() => sendAnswer(answers[q.id], q.id)}>
                 SEND!
               </button>
             </div>
           )}
-
         </div>
       ))}
     </div>

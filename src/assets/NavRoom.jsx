@@ -1,13 +1,21 @@
 export default function NavRoom({ roomCode , username}) {
   return (
-    <div className="nav-room">
-      <p> {username} </p>
-      <h1>Trivia</h1>
-      <div className="room-code">
-        <span onClick={saveInClipBoard}>Copy Room Code</span>
-      </div>
+  <header className="nav-room">
+    <div className="nav-left">
+      <span className="username">{username}</span>
     </div>
-  );
+
+    <div className="nav-center">
+      <h1 className="app-title">Trivia</h1>
+    </div>
+
+    <div className="nav-right">
+      <button className="copy-code-btn" onClick={saveInClipBoard}>
+        Copy Room Link
+      </button>
+    </div>
+  </header>
+);
 
 
   function saveInClipBoard(){

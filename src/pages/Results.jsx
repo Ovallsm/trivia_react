@@ -20,7 +20,7 @@ export default function Results() {
   const [questionsPerRound, setQuestionsPerRound] = useState([]);
 
   useEffect(() => {
-       if (token == null) {
+    if (token == null) {
       navigator("/");
       return;
     }
@@ -107,35 +107,29 @@ export default function Results() {
     navigator("/");
   };
   return (
-    <div>
-      <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+    <div className="results-wrapper">
+      <div className="results-grid">
         {teams.map((team, index) => {
           const teamPlayers = players.filter((p) => p.team === team.id);
-
           const teamPoints = getTeamPoints(team.id);
 
           return (
-            <div
-              key={team.id}
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "10px",
-                padding: "16px",
-                width: "350px",
-              }}
-              className="results-container"
-            >
+            <div key={team.id} className="results-container">
               <h2>Team {index + 1}</h2>
 
               <h4>Jugadores:</h4>
-              <ul>
-                {teamPlayers.map((player) => (
-                  <li key={player.id}>{player.name}</li>
-                ))}
-              </ul>
+              {teamPlayers.length > 0 ? (
+                <ul>
+                  {teamPlayers.map((player) => (
+                    <li key={player.id}>{player.name}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="empty-message">Sin jugadores</p>
+              )}
 
               {rounds.map((round, roundIndex) => (
-                <div key={round.id} style={{ marginBottom: "16px" }}>
+                <div key={round.id} className="round-block">
                   <h4>Ronda {roundIndex + 1}</h4>
 
                   {questionsPerRound[roundIndex]?.map((q, questionIndex) => {
@@ -143,7 +137,7 @@ export default function Results() {
                       questionsAnswered[roundIndex]?.[questionIndex] || [];
 
                     return (
-                      <div key={q.id}>
+                      <div key={q.id} className="question-block">
                         <strong>
                           Pregunta {questionIndex + 1}: {q.question}
                         </strong>
@@ -161,9 +155,9 @@ export default function Results() {
                               return (
                                 <li
                                   key={ans.id}
-                                  style={{
-                                    color: correct ? "green" : "red",
-                                  }}
+                                  className={
+                                    correct ? "answer-correct" : "answer-wrong"
+                                  }
                                 >
                                   {player?.name} → {ans.answer}
                                 </li>
@@ -183,12 +177,14 @@ export default function Results() {
       </div>
 
       {winner && (
-        <h1 style={{ marginTop: "30px" }}>
-          Ganador: Team {teams.findIndex((t) => t.id === winner.id) + 1}
-        </h1>
+        <div className="winner-banner">
+           Ganador: Team {teams.findIndex((t) => t.id === winner.id) + 1}
+        </div>
       )}
 
-      <button onClick={() => goToCreateRoom()}>Volver a crear sala</button>
+      <button className="results-btn" onClick={goToCreateRoom}>
+        Volver a crear sala
+      </button>
     </div>
   );
 }

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { startGame } from "../scripts/fetchGame";
 export default function GameOptions() {
   var navigate = useNavigate();
-  const { token, roomId, setGameId } = useContext(TokenContext);
+  const { token, roomId, setGameId , isHost} = useContext(TokenContext);
   const [gameOptions, setGameOptions] = useState({
     rounds: 2,
     timePerRound: 60,
@@ -40,43 +40,61 @@ export default function GameOptions() {
     }
   };
 
+  if (!isHost) return null;
   return (
-    <div className="game-options">
-      <h1>Game Options</h1>
+  <div className="game-options-wrapper">
+    <div className="game-options-card">
+      <h2 className="game-options-title">Game Options</h2>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Number of Rounds</label>
+      <form className="game-options-form" onSubmit={handleSubmit}>
+        
+        <div className="form-group">
+          <label htmlFor="rounds">Number of Rounds</label>
           <input
+            id="rounds"
             type="number"
             name="rounds"
+            min="1"
             value={gameOptions.rounds}
             onChange={handleChange}
           />
         </div>
 
-        <div>
-          <label>Time Per Round (seconds)</label>
+        <div className="form-group">
+          <label htmlFor="timePerRound">
+            Time Per Round (seconds)
+          </label>
           <input
+            id="timePerRound"
             type="number"
             name="timePerRound"
+            min="10"
             value={gameOptions.timePerRound}
             onChange={handleChange}
           />
         </div>
 
-        <div>
-          <label>Questions Per Round</label>
+        <div className="form-group">
+          <label htmlFor="questionsPerRound">
+            Questions Per Round
+          </label>
           <input
+            id="questionsPerRound"
             type="number"
             name="questionsPerRound"
+            min="1"
             value={gameOptions.questionsPerRound}
             onChange={handleChange}
           />
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <button type="submit">Start!</button>
+
+        {error && <p className="form-error">{error}</p>}
+
+        <button className="start-game-btn" type="submit">
+          Start Game
+        </button>
       </form>
     </div>
-  );
+  </div>
+);
 }
