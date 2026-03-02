@@ -36,6 +36,7 @@ export default function CreateGame() {
         navigate("/room");
       } catch (error) {
         console.error(error);
+        navigate("/offline")
       }
     } else {
       setError(true);
