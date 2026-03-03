@@ -5,11 +5,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import TokenProvider from "./context/TokenProvider.jsx";
 import Room from "./pages/room";
 import CreateGame from "./pages/createGame";
-import JoinGame from "./pages/joingame";
+import JoinGame from "./pages/joinGame";
 import Game from "./pages/Game.jsx";
 import Results from "./pages/Results.jsx";
 import LastGame from "./pages/LastGame.jsx";
 import Offline from "./pages/Offline.jsx";
+
+
 const router = createBrowserRouter([
   { path: "/", element: <CreateGame /> },
   { path: "/joinroom", element: <JoinGame /> },
