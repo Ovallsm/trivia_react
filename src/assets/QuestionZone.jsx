@@ -6,7 +6,7 @@ import "../styles/game.css";
 export default function QuestionZone({ questions, roundID }) {
   const { token, gameId } = useContext(TokenContext);
   const [answers, setAnswers] = useState({});
-
+  const [status, setStatus] = useState({});
   const handleInputChange = (questionId, value) => {
     setAnswers((prev) => ({
       ...prev,
@@ -16,8 +16,13 @@ export default function QuestionZone({ questions, roundID }) {
 
   const sendAnswer = async (answer, id) => {
     try {
+      setStatus((prev) => ({ ...prev, [id]: "sending" }));
+
       await sendAnswerFetch(answer, id, roundID, gameId, token);
-    } catch (error) {}
+      setStatus((prev) => ({ ...prev, [id]: "success" }));
+    } catch (error) {
+      setStatus((prev) => ({ ...prev, [id]: "error" }));
+    }
   };
 
   return (
@@ -83,6 +88,14 @@ export default function QuestionZone({ questions, roundID }) {
               </button>
             </div>
           )}
+
+          {status[q.id] === "sending" && <p className="sending">Enviando...</p>}
+
+          {status[q.id] === "success" && (
+            <p className="success">Respuesta enviada</p>
+          )}
+
+          {status[q.id] === "error" && <p className="error">Error al enviar</p>}
         </div>
       ))}
     </div>

@@ -221,3 +221,18 @@
   color: white;
   border-color: #28a745;
 }
+
+.sending {
+  color: orange;
+  font-weight: bold;
+}
+
+.success {
+  color: green;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}

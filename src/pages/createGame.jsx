@@ -23,7 +23,7 @@ export default function CreateGame() {
 
   const handleCreateGame = async () => {
     if (username !== "") {
-      localStorage.clear
+      localStorage.clear();
       try {
         const gameData = await createGame(username);
 
