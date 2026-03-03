@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import {
   fetchGame,
   fetchRounds,
@@ -122,7 +123,12 @@ export default function Game() {
           )}
         </>
       ) : (
-        <h3>No active round</h3>
+        <>
+        <div className="loading">
+          Loading!
+        </div>
+        </>
+
       )}
     </>
   );

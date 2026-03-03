@@ -8,10 +8,10 @@ export default function LastGame() {
   const [rounds, setRounds] = useState([]);
   const [questionsPerRound, setQuestionsPerRound] = useState([]);
   const [questionsAnswered, setQuestionsAnswered] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedData = localStorage.getItem("lastGameResults");
-
     console.log(savedData);
     if (savedData) {
       const parsed = JSON.parse(savedData);
@@ -66,7 +66,7 @@ export default function LastGame() {
   }, teams[0]);
 
   const goToCreateRoom = () => {
-    navigator("/");
+    navigate("/");
   };
   return (
     <div className="results-wrapper">

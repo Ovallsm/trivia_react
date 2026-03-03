@@ -115,7 +115,7 @@ export default function Room() {
   return (
     <>
       <NavRoom roomCode={joinURL} username={name} />
-      <GameOptions />
+      <GameOptions teams={teams} />
       <TeamZone
         players={players}
         teams={teams}

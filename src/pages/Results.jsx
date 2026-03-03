@@ -19,6 +19,7 @@ export default function Results() {
   const [rounds, setRounds] = useState([]);
   const [questionsPerRound, setQuestionsPerRound] = useState([]);
 
+  
   useEffect(() => {
     if (token == null) {
       navigator("/");

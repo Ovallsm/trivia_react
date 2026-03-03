@@ -17,13 +17,13 @@ const router = createBrowserRouter([
   { path: "/game", element: <Game /> },
   { path: "/results", element: <Results /> },
   { path: "/history", element: <LastGame /> },
-  { path: "/offline", element: <Offline/>}
+  { path: "/offline", element: <Offline /> },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  // <StrictMode>
-  <TokenProvider>
-    <RouterProvider router={router} />
-  </TokenProvider>,
-  // </StrictMode>,
+  <StrictMode>
+    <TokenProvider>
+      <RouterProvider router={router} />
+    </TokenProvider>
+  </StrictMode>,
 );

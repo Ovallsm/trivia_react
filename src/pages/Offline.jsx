@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import "../styles/offline.css"
 export default function Offline() {
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
+    <div className="offline-Error">
       <h1>Sin conexión</h1>
       <p>No se puede conectar con el servidor.</p>
       <p>Revisa tu conexión a internet.</p>
