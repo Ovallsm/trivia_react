@@ -21,7 +21,6 @@ export default function GameOptions(teams) {
     }));
   };
 
-  console.log(teams);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -32,7 +31,6 @@ export default function GameOptions(teams) {
         return;
       }
       const result = await startGame(roomId, token, gameOptions);
-      console.log(teams.teams.length);
 
       if (!result || !result.id) {
         throw new Error("Invalid response from server");

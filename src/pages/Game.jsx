@@ -12,7 +12,6 @@ import TokenContext from "../context/tokenContext";
 
 export default function Game() {
   const { token, gameId } = useContext(TokenContext);
-
   const navigate = useNavigate();
   const [gameData, setGameData] = useState(null);
   const [rounds, setRounds] = useState([]);

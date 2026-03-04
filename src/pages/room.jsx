@@ -65,13 +65,11 @@ export default function Room() {
       eventSource.current = FetchSSeServer(roomId, token);
 
       eventSource.current.addEventListener("player-joined", async (event) => {
-        console.log(event.data);
         const player = await fetchNewPLayer(event.data, token, roomId);
         setPlayers((prev) => [...prev, { name: player.name, id: player.id, team: player.team }]);
       });
 
       eventSource.current.addEventListener("player-left", (event) => {
-        console.log("player left", event.data);
         setPlayers((prev) => prev.filter((player) => player.id != event.data));
 
         if (playerId == event.data) {
