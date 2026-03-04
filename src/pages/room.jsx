@@ -91,13 +91,11 @@ export default function Room() {
         setTeams(updatedTeams);
       });
       eventSource.current.addEventListener("team-deleted", async (event) => {
-        console.log("team deleted", event.data);
         const updatedTeams = await getRoomsTeams(roomId, token);
         setTeams(updatedTeams);
       });
       eventSource.current.addEventListener("player-assigned-to-team", async (event) => {
         const player = await fetchNewPLayer(event.data, token, roomId);
-        console.log(player)
         setPlayers((prev) => prev.map((p) => (p.id == player.id ? player : p)));
       })
       eventSource.current.addEventListener("player-removed-from-team", async (event) => {

@@ -1,5 +1,5 @@
 export async function startGame(roomId, token, gameOptions) {
-  var param = new URL("http://localhost:8083/games");
+  var param = new URL("https://triviaapi.artemrudenko.com/games");
     const response = await fetch(param.toString(), {
     method: "POST",
     headers: {
@@ -19,7 +19,7 @@ export async function startGame(roomId, token, gameOptions) {
 
 
 export async function fetchGame(token, gameID) {
-    var param = new URL("http://localhost:8083/games/" + gameID);
+    var param = new URL("https://triviaapi.artemrudenko.com/games/" + gameID);
     param.searchParams.append("token", token);
     const response = await fetch(param.toString()).then((res) => res.json());
     return response;
@@ -27,14 +27,14 @@ export async function fetchGame(token, gameID) {
 }
 
 export async function fetchRounds(token, gameID) {
-    var param = new URL("http://localhost:8083/games/" + gameID + "/rounds");
+    var param = new URL("https://triviaapi.artemrudenko.com/games/" + gameID + "/rounds");
     param.searchParams.append("token", token);
     const response = await fetch(param.toString()).then((res) => res.json());
     return response;
 }
 
 export async function getQuestionsOfRound(round, token, gameID) {
-    var param = new URL("http://localhost:8083/games/" + gameID + "/rounds/" + round.id + "/questions");
+    var param = new URL("https://triviaapi.artemrudenko.com/games/" + gameID + "/rounds/" + round.id + "/questions");
     param.searchParams.append("token", token);
     const response = await fetch(param.toString()).then((res) => res.json());
     return response;
@@ -43,7 +43,7 @@ export async function getQuestionsOfRound(round, token, gameID) {
 export async function sendAnswerFetch(answer, questionId, roundId, gameId, token) {
 
 
-    var param = new URL("http://localhost:8083/games/" + gameId + "/rounds/" + roundId + "/questions/" + questionId);
+    var param = new URL("https://triviaapi.artemrudenko.com/games/" + gameId + "/rounds/" + roundId + "/questions/" + questionId);
 
     const response = await fetch(param.toString(),{
         method: "Post",
@@ -60,7 +60,7 @@ export async function sendAnswerFetch(answer, questionId, roundId, gameId, token
 }
 
 export async function getQuestionsAnswers(questionId, roundId, gameId, token) {
-    var param = new URL("http://localhost:8083/games/" + gameId + "/rounds/" + roundId + "/questions/" + questionId );
+    var param = new URL("https://triviaapi.artemrudenko.com/games/" + gameId + "/rounds/" + roundId + "/questions/" + questionId );
     param.searchParams.append("token", token);
     const response = await fetch(param.toString()).then((res) => res.json());
     return response;

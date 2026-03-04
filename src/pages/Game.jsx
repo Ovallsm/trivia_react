@@ -40,7 +40,6 @@ export default function Game() {
 
   useEffect(() => {
     if (!rounds.length) return;
-
     const interval = setInterval(() => {
       const now = Date.now();
 
@@ -62,7 +61,6 @@ export default function Game() {
         const remaining = Math.max(0, endTime - now);
         setTimeLeft(Math.floor(remaining / 1000));
       } else {
-        navigate("/results");
         setCurrentRound(null);
         setTimeLeft(0);
       }
@@ -90,11 +88,15 @@ export default function Game() {
     loadQuestions();
   }, [currentRound, token, gameId]);
 
-  if (!gameData) return <>Loading...</>;
-
   const currentRoundNumber = currentRound
     ? rounds.findIndex((r) => r.id === currentRound.id) + 1
     : null;
+
+
+    if (currentRound && (currentRoundNumber == rounds.length && timeLeft == 0)) {
+    console.log("gg!")
+    navigate("/results");
+  }
 
   return (
     <>
@@ -124,11 +126,8 @@ export default function Game() {
         </>
       ) : (
         <>
-        <div className="loading">
-          Loading!
-        </div>
+          <div className="loading">Loading!</div>
         </>
-
       )}
     </>
   );

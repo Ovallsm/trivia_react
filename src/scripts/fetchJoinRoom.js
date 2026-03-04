@@ -1,5 +1,5 @@
 async function fetchCreateGame() {
-  return fetch("http://localhost:8083/rooms", {
+  return fetch("https://triviaapi.artemrudenko.com/rooms", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -13,7 +13,7 @@ function generateCode() {
 }
 
 async function fetchAddPlayer(name, room) {
-  return fetch("http://localhost:8083/rooms" + "/" + room.id + "/players", {
+  return fetch("https://triviaapi.artemrudenko.com/rooms" + "/" + room.id + "/players", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

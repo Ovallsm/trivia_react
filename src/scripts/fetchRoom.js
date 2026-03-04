@@ -1,5 +1,5 @@
 export default  function  FetchSSeServer(roomId, playerToken) {
-  var param = new URL("http://localhost:8083/rooms/" + roomId + "/events");
+  var param = new URL("https://triviaapi.artemrudenko.com/rooms/" + roomId + "/events");
   param.searchParams.append("token", playerToken);
 
 
@@ -12,7 +12,7 @@ export default  function  FetchSSeServer(roomId, playerToken) {
 }
 
 export async function getRoomPlayers(id, playerToken) {
-  var param = new URL("http://localhost:8083/rooms/" + id + "/players");
+  var param = new URL("https://triviaapi.artemrudenko.com/rooms/" + id + "/players");
 
   param.searchParams.append("token", playerToken);
   const response = await fetch(param.toString()).then((res) => res.json())
@@ -21,7 +21,7 @@ export async function getRoomPlayers(id, playerToken) {
 }
 
 export async function fetchNewPLayer(id, playerToken, roomId) {
-var param = new URL("http://localhost:8083/rooms/" + roomId + "/players/" +id);
+var param = new URL("https://triviaapi.artemrudenko.com/rooms/" + roomId + "/players/" +id);
 param.searchParams.append("token", playerToken);
 const response = await fetch(param.toString()).then((res) => res.json())
 console.log(response)
@@ -29,7 +29,7 @@ return { name: response.username, id: response.id, team: response.teamId }
 }
 
 export async function createTeam(token, roomId) {
-var param = new URL("http://localhost:8083/rooms/" + roomId + "/teams");
+var param = new URL("https://triviaapi.artemrudenko.com/rooms/" + roomId + "/teams");
 param.searchParams.append("token", token);
 const response = await fetch(param.toString(), {
   method: "POST",
@@ -38,7 +38,7 @@ return response;
 }
 
 export async function joinTeam(teamId, token, roomId, playerId) {
-  var param = new URL("http://localhost:8083/rooms/" + roomId + "/teams/" + teamId + "/players/" + playerId);
+  var param = new URL("https://triviaapi.artemrudenko.com/rooms/" + roomId + "/teams/" + teamId + "/players/" + playerId);
   param.searchParams.append("token", token);
   const response = await fetch(param.toString(), {
     method: "PUT",
@@ -47,7 +47,7 @@ export async function joinTeam(teamId, token, roomId, playerId) {
 }
 
 export async function getRoomsTeams(roomId, token) {
-  var param = new URL("http://localhost:8083/rooms/" + roomId + "/teams");
+  var param = new URL("https://triviaapi.artemrudenko.com/rooms/" + roomId + "/teams");
   param.searchParams.append("token", token);
   const response = await fetch(param.toString()).then((res) => res.json());
 
@@ -55,7 +55,7 @@ export async function getRoomsTeams(roomId, token) {
 }
 
 export async function quitTeam(teamId, token, roomId, playerId) {
-  var param = new URL("http://localhost:8083/rooms/" + roomId + "/teams/" + teamId + "/players/" + playerId);
+  var param = new URL("https://triviaapi.artemrudenko.com/rooms/" + roomId + "/teams/" + teamId + "/players/" + playerId);
   param.searchParams.append("token", token);
   const response = await fetch(param.toString(), {
     method: "DELETE",
@@ -63,7 +63,7 @@ export async function quitTeam(teamId, token, roomId, playerId) {
 }
 
 export async function ELiminateTeam(teamId, token, roomId) {
-  var param = new URL("http://localhost:8083/rooms/" + roomId + "/teams/" + teamId);
+  var param = new URL("https://triviaapi.artemrudenko.com/rooms/" + roomId + "/teams/" + teamId);
   param.searchParams.append("token", token);
   const response = await fetch(param.toString(), {
     method: "DELETE",
@@ -71,7 +71,7 @@ export async function ELiminateTeam(teamId, token, roomId) {
 }
 
 export async function removeFromMatch(playerId, roomId, token) {
-  var param = new URL("http://localhost:8083/rooms/" + roomId + "/players/" + playerId);
+  var param = new URL("https://triviaapi.artemrudenko.com/rooms/" + roomId + "/players/" + playerId);
   param.searchParams.append("token", token);
   const response = await fetch(param.toString(), {
     method: "DELETE",

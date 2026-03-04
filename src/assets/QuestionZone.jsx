@@ -25,7 +25,7 @@ export default function QuestionZone({ questions, roundID }) {
     }
   };
 
-  return (
+    return (
     <div className="question-zone">
       {questions.map((q) => (
         <div key={q.id} className="question-card">
@@ -84,6 +84,65 @@ export default function QuestionZone({ questions, roundID }) {
                 onChange={(e) => handleInputChange(q.id, e.target.value)}
               />
               <button onClick={() => sendAnswer(answers[q.id], q.id)}>
+                SEND!
+              </button>
+            </div>
+          )}
+
+          {q.type === "select_all" && (
+            <div className="multiple-options">
+              {q.options.map((option, index) => {
+                const isSelected = answers[q.id] === option;
+
+                return (
+                  <button
+                    key={index}
+                    className={isSelected ? "selected-answer" : ""}
+                    onClick={() => {
+                      handleInputChange(q.id, option);
+                      sendAnswer(option, q.id);
+                    }}
+                  >
+                    {option}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {q.type === "true_false" && (
+            <div className="multiple-options">
+              {q.options.map((option, index) => {
+                const isSelected = answers[q.id] === option;
+
+                return (
+                  <button
+                    key={index}
+                    className={isSelected ? "selected-answer" : ""}
+                    onClick={() => {
+                      handleInputChange(q.id, option);
+                      sendAnswer(option, q.id);
+                    }}
+                  >
+                    {option}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {q.type === "open_ended" && (
+            <div className="short-answer">
+              <input
+                type="text"
+                placeholder="Escribe tu respuesta..."
+                value={answers[q.id] || ""}
+                onChange={(e) => handleInputChange(q.id, e.target.value)}
+              />
+              <button
+                className={answers[q.id] ? "submitted-answer" : ""}
+                onClick={() => sendAnswer(answers[q.id], q.id)}
+              >
                 SEND!
               </button>
             </div>
