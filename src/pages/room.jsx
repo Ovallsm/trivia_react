@@ -122,7 +122,7 @@ export default function Room() {
   );
 
   function generateJoinURL(roomId, code) {
-    var param = new URL("http://localhost:5173/joinroom");
+    var param = new URL("https://triviaapireac.netlify.app/joinroom");
     param.searchParams.append("code", code);
     param.searchParams.append("id", roomId);
 
